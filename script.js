@@ -30,15 +30,20 @@ async function getWeather() {
 
         document.getElementById('city').innerText = `${weatherData.name}, ${weatherData.sys.country}`;
         document.getElementById('temp').innerText = `${Math.round(weatherData.main.temp)}°C`;
+
+        const iconCode = weatherData.weather[0].icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        document.getElementById('weather-icon').src = iconUrl;
+        document.getElementById('weather-icon').alt = weatherData.weather[0].description;
+
         document.getElementById('description').innerText = weatherData.weather[0].description;
 
         document.getElementById('feels-like').innerText = `${Math.round(weatherData.main.feels_like)}°C`;
-        document.getElementById('max-temp').innerText = `${Math.round(weatherData.main.temp_max)}°C`;
-        document.getElementById('min-temp').innerText = `${Math.round(weatherData.main.temp_min)}°C`;
         document.getElementById('humidity').innerText = `${weatherData.main.humidity}%`;
         document.getElementById('pressure').innerText = `${weatherData.main.pressure} hPa`;
         document.getElementById('visibility').innerText = `${(weatherData.visibility / 1000).toFixed(1)} km`;
         document.getElementById('wind').innerText = `${weatherData.wind.speed} m/s`;
+        document.getElementById('sea-level').innerText = `${weatherData.main.sea_level} m`;
 
         const sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString();
         const sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
@@ -54,7 +59,6 @@ async function getWeather() {
              document.getElementById('forecast').innerHTML = '';
              return;
         }
-
 
         const forecastDiv = document.getElementById('forecast');
         forecastDiv.innerHTML = '';
